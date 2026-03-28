@@ -538,6 +538,10 @@
             "type": "string",
             "nullable": true
           },
+          "categoryName": {
+            "type": "string",
+            "nullable": true
+          },
           "categoryId": {
             "type": "integer",
             "format": "int32"
