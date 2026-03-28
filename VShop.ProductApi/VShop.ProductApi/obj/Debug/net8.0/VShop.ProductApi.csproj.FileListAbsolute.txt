@@ -6,6 +6,7 @@ E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\VShop.P
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\VShop.ProductApi.runtimeconfig.json
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\VShop.ProductApi.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\VShop.ProductApi.pdb
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\AutoMapper.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Humanizer.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.Build.Locator.dll
@@ -29,6 +30,10 @@ E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microso
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.OpenApi.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Mono.TextTemplating.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\MySqlConnector.dll
@@ -120,6 +125,7 @@ E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.P
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.ProductApi.csproj.CoreCompileInputs.cache
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.ProductApi.MvcApplicationPartsAssemblyInfo.cs
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.ProductApi.MvcApplicationPartsAssemblyInfo.cache
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.ProductApi.sourcelink.json
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\rjimswa.dswa.cache.json
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
@@ -128,16 +134,10 @@ E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\staticw
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\staticwebassets.build.json.cache
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\staticwebassets.development.json
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.Pr.2BC47236.Up2Date
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.ProductApi.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\refint\VShop.ProductApi.dll
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.ProductApi.pdb
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.ProductApi.genruntimeconfig.cache
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\ref\VShop.ProductApi.dll
-E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\AutoMapper.dll
-E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
-E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
-E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
-E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
-E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
-E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

@@ -538,9 +538,6 @@
             "type": "string",
             "nullable": true
           },
-          "category": {
-            "$ref": "#/components/schemas/Category"
-          },
           "categoryId": {
             "type": "integer",
             "format": "int32"
