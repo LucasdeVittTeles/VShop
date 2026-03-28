@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Novo Perfil",
+    "Projects": [
+      {
+        "Path": "VShop.ProductApi\\VShop.ProductApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\VShop.Web\\VShop.Web.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

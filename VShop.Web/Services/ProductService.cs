@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using VShop.Web.Models;
 using VShop.Web.Services.Interfaces;
 
@@ -19,29 +20,116 @@ public class ProductService : IProductService
         _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     }
 
-    public Task<IEnumerable<ProductViewModel>> GetAllProducts()
+    public async Task<IEnumerable<ProductViewModel>> GetAllProducts()
     {
-        throw new NotImplementedException();
+
+        var client = _clientFactory.CreateClient("ProductApi");
+
+        using (var response = await client.GetAsync(apiEndpoint))
+        {
+
+            if (response.IsSuccessStatusCode)
+            {
+                var apiResponse = await response.Content.ReadAsStreamAsync();
+
+                _productsViewModel = await JsonSerializer.DeserializeAsync<IEnumerable<ProductViewModel>>(apiResponse, _options);
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        return _productsViewModel;
+
     }
 
-    public Task<ProductViewModel> FindProductById(int id)
+    public async Task<ProductViewModel> FindProductById(int id)
     {
-        throw new NotImplementedException();
+        var client = _clientFactory.CreateClient("ProductApi");
+
+        using (var response = await client.GetAsync(apiEndpoint + $"/GetProduct:{id}"))
+        {
+
+            if (response.IsSuccessStatusCode)
+            {
+                var apiResponse = await response.Content.ReadAsStreamAsync();
+
+                _productViewModel = await JsonSerializer.DeserializeAsync<ProductViewModel>(apiResponse, _options);
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        return _productViewModel;
     }
 
-    public Task<ProductViewModel> CreateProduct(ProductViewModel productVM)
+    public async Task<ProductViewModel> CreateProduct(ProductViewModel productVM)
     {
-        throw new NotImplementedException();
+        var client = _clientFactory.CreateClient("ProductApi");
+
+        var jsonProductVM = JsonSerializer.Serialize(productVM);
+
+        var content = new StringContent(jsonProductVM, Encoding.UTF8, "application/json");
+
+        using (var response = await client.PostAsync(apiEndpoint, content))
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                var apiResponse = await response.Content.ReadAsStreamAsync();
+
+                _productViewModel = await JsonSerializer.DeserializeAsync<ProductViewModel>(apiResponse, _options);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        return _productViewModel;
     }
 
-    public Task<ProductViewModel> UpdateProduct(ProductViewModel productVM)
+    public async Task<ProductViewModel> UpdateProduct(ProductViewModel productVM)
     {
-        throw new NotImplementedException();
+        var client = _clientFactory.CreateClient("ProductApi");
+
+        ProductViewModel productUpdated = new ProductViewModel();
+
+        using (var response = await client.PutAsJsonAsync(apiEndpoint, productVM))
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                var apiResponse = await response.Content.ReadAsStreamAsync();
+
+                productUpdated = await JsonSerializer.DeserializeAsync<ProductViewModel>(apiResponse, _options);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        return productUpdated;
     }
 
-    public Task<bool> DeleteProductById(int id)
+    public async Task<bool> DeleteProductById(int id)
     {
-        throw new NotImplementedException();
+        var client = _clientFactory.CreateClient("ProductApi");
+
+        using (var response = await client.DeleteAsync(apiEndpoint + id))
+        {
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+        }
+        return false;
+
     }
 
 }
