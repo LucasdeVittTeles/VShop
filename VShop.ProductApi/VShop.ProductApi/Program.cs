@@ -1,12 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json.Serialization;
+using VShop.ProductApi;
 using VShop.ProductApi.Context;
 using VShop.ProductApi.DTOs.Mappings;
-using VShop.ProductApi.Repositories;
-using VShop.ProductApi.Repositories.Interfaces;
-using VShop.ProductApi.Services;
-using VShop.ProductApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,17 +16,19 @@ builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.Re
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<AppDbContext>(opts => opts.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfile));
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddCoreRepositoryDependencies();
+builder.Services.AddCoreServicesDependencies();
+
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//builder.Services.AddScoped<IProductRepository, ProductRepository>();
+//builder.Services.AddScoped<ICategoryService, CategoryService>();
+//builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
