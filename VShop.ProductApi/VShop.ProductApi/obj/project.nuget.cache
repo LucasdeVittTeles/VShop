@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "gYKYLYarZq4=",
+  "dgSpecHash": "XoYoETfuTfE=",
   "success": true,
   "projectFilePath": "E:\\MeusProjetos\\VShop\\VShop.ProductApi\\VShop.ProductApi\\VShop.ProductApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lucas\\.nuget\\packages\\automapper\\16.1.1\\automapper.16.1.1.nupkg.sha512",
-    "C:\\Users\\lucas\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\lucas\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\lucas\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
     "C:\\Users\\lucas\\.nuget\\packages\\microsoft.build.framework\\17.8.3\\microsoft.build.framework.17.8.3.nupkg.sha512",
@@ -60,18 +59,5 @@
     "C:\\Users\\lucas\\.nuget\\packages\\system.text.json\\9.0.0\\system.text.json.9.0.0.nupkg.sha512",
     "C:\\Users\\lucas\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1608",
-      "level": "Warning",
-      "message": "Versão detectada do pacote fora da restrição de dependência: AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1 requer AutoMapper (= 12.0.1), mas a versão AutoMapper 16.1.1 foi resolvida.",
-      "projectPath": "E:\\MeusProjetos\\VShop\\VShop.ProductApi\\VShop.ProductApi\\VShop.ProductApi.csproj",
-      "warningLevel": 1,
-      "filePath": "E:\\MeusProjetos\\VShop\\VShop.ProductApi\\VShop.ProductApi\\VShop.ProductApi.csproj",
-      "libraryId": "AutoMapper",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }
