@@ -49,7 +49,7 @@ public class ProductService : IProductService
     {
         var client = _clientFactory.CreateClient("ProductApi");
 
-        using (var response = await client.GetAsync(apiEndpoint + $"/GetProduct:{id}"))
+        using (var response = await client.GetAsync(apiEndpoint + id))
         {
 
             if (response.IsSuccessStatusCode)
