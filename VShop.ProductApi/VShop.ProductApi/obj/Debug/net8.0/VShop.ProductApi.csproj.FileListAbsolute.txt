@@ -141,3 +141,7 @@ E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\refint\
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.ProductApi.pdb
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\VShop.ProductApi.genruntimeconfig.cache
 E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\obj\Debug\net8.0\ref\VShop.ProductApi.dll
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\MeusProjetos\VShop\VShop.ProductApi\VShop.ProductApi\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
