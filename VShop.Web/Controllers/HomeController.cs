@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using VShop.Web.Models;
@@ -16,6 +18,15 @@ namespace VShop.Web.Controllers
         public IActionResult Index()
         {
             return View();
+
+            //var result = await _productService.GetAllProducts(await GetAccessToken());
+
+            //if (result is null)
+            //{
+            //    return View("Error");
+            //}
+
+            //return View(result);
         }
 
 
@@ -24,5 +35,20 @@ namespace VShop.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [Authorize]
+        public async Task<IActionResult> Login()
+        {
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            Console.WriteLine("TOKEN COMPLETO: " + accessToken);
+
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Logout()
+        {
+            return SignOut("Cookies", "oidc");
+        }
+
     }
 }

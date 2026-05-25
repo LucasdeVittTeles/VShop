@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VShop.ProductApi.DTOs;
+using VShop.ProductApi.Roles;
 using VShop.ProductApi.Services.Interfaces;
 
 namespace VShop.ProductApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
 
@@ -43,6 +46,7 @@ namespace VShop.ProductApi.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult> CreateProduct([FromBody] ProductDTO productDTO)
         {
 
@@ -58,6 +62,7 @@ namespace VShop.ProductApi.Controllers
         }
 
         [HttpPut()]
+        [Authorize(Roles = Role.Admin)]
         public async Task<ActionResult> UpdateProduct([FromBody] ProductDTO productDTO)
         {
 
@@ -74,6 +79,7 @@ namespace VShop.ProductApi.Controllers
 
 
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = Role.Admin)]
 
         public async Task<ActionResult<ProductDTO>> DeleteProduct(int id)
         {
