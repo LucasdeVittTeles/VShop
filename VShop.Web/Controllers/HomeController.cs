@@ -18,6 +18,15 @@ namespace VShop.Web.Controllers
         public IActionResult Index()
         {
             return View();
+
+            //var result = await _productService.GetAllProducts(await GetAccessToken());
+
+            //if (result is null)
+            //{
+            //    return View("Error");
+            //}
+
+            //return View(result);
         }
 
 
@@ -31,6 +40,9 @@ namespace VShop.Web.Controllers
         public async Task<IActionResult> Login()
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            Console.WriteLine("TOKEN COMPLETO: " + accessToken);
+
             return RedirectToAction(nameof(Index));
         }
         public IActionResult Logout()

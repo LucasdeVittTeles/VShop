@@ -44,6 +44,7 @@ var oidcConfig = new Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConne
     JwksUri = jwksUri,
 };
 
+
 foreach (var key in jsonWebKeySet.GetSigningKeys())
     oidcConfig.SigningKeys.Add(key);
 
@@ -148,6 +149,11 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage(); // ✅ adicione isso
+}
 
 if (!app.Environment.IsDevelopment())
 {

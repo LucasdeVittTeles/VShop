@@ -43,6 +43,7 @@ public class IdentityConfiguration
                 new Client
                 {
                     ClientId = "vshop",
+                    AccessTokenLifetime = 14400,
                     ClientSecrets = { new Secret("abracadabra#simsalabim".Sha256())},
                     AllowedGrantTypes = GrantTypes.Code, //via codigo
                     RequirePkce = true,

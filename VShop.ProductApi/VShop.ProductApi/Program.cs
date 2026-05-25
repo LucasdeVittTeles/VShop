@@ -8,15 +8,9 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-//builder.Services.AddControllers();
-
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "VShop.ProductApi", Version = "v1" });
@@ -28,7 +22,6 @@ builder.Services.AddSwaggerGen(c =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
-
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
          {
@@ -41,31 +34,49 @@ builder.Services.AddSwaggerGen(c =>
                },
                Scheme = "oauth2",
                Name = "Bearer",
-               In= ParameterLocation.Header
+               In = ParameterLocation.Header
             },
-            new List<string> ()
+            new List<string>()
          }
     });
 });
 
 var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext<AppDbContext>(opts => opts.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
+builder.Services.AddDbContext<AppDbContext>(opts =>
+    opts.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfile));
-
 builder.Services.AddCoreRepositoryDependencies();
 builder.Services.AddCoreServicesDependencies();
+
+// ? Carrega as chaves do Identity Server manualmente (resolve problema de certificado dev)
+var certHandler = new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+};
+using var httpClient = new HttpClient(certHandler);
+var jwksJson = await httpClient.GetStringAsync(
+    "https://localhost:7150/.well-known/openid-configuration/jwks");
+var jsonWebKeySet = new Microsoft.IdentityModel.Tokens.JsonWebKeySet(jwksJson);
+var signingKeys = jsonWebKeySet.GetSigningKeys();
 
 builder.Services.AddAuthentication("Bearer")
        .AddJwtBearer("Bearer", options =>
        {
-           options.Authority =
-             builder.Configuration["VShop.IdentityServer:ApplicationUrl"];
-
+           options.Authority = "https://localhost:7150";
+           options.RequireHttpsMetadata = false;
            options.TokenValidationParameters = new TokenValidationParameters
            {
-               ValidateAudience = false
+               ValidateAudience = true,
+               ValidAudience = "vshop",
+               IssuerSigningKeys = signingKeys, // ? chaves injetadas manualmente
+               ValidateIssuerSigningKey = true,
+           };
+           options.BackchannelHttpHandler = new HttpClientHandler
+           {
+               ServerCertificateCustomValidationCallback =
+                   HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
            };
        });
 
@@ -80,7 +91,6 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -88,10 +98,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
