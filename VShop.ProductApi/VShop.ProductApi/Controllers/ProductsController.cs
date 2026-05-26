@@ -8,7 +8,6 @@ namespace VShop.ProductApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductsController : ControllerBase
     {
 
@@ -96,7 +95,6 @@ namespace VShop.ProductApi.Controllers
             return Ok(productDTO);
 
         }
-
 
     }
 }
