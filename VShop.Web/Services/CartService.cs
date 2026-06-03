@@ -10,7 +10,7 @@ namespace VShop.Web.Services
 
         private readonly IHttpClientFactory _clientFactory;
         private readonly JsonSerializerOptions _options;
-        private const string apiEndpoint = "/api/cart/";
+        private const string apiEndpoint = "/api/Cart";
         private CartViewModel _cartVM = new CartViewModel();
 
         public CartService(IHttpClientFactory clientFactory)
@@ -50,7 +50,7 @@ namespace VShop.Web.Services
 
             var content = new StringContent(JsonSerializer.Serialize(cartVM), Encoding.UTF8, "application/json");
 
-            using (var response = await client.PostAsync($"{apiEndpoint}/addcart/", content))
+            using (var response = await client.PostAsync($"{apiEndpoint}/addcart", content))
             {
                 if (response.IsSuccessStatusCode)
                 {
