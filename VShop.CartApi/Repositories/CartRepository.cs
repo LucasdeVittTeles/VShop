@@ -85,11 +85,14 @@ public class CartRepository : ICartRepository
     public async Task<CartDTO> UpdateCartAsync(CartDTO cartDTO)
     {
 
+        Console.WriteLine($"[{DateTime.Now}] Iniciando UpdateCartAsync");
         Cart cart = _mapper.Map<Cart>(cartDTO);
 
+        Console.WriteLine($"[{DateTime.Now}] Chamando SaveProductInDataBase");
         //salvar produto no banco se ele não existir
         await SaveProductInDataBase(cartDTO, cart);
 
+        Console.WriteLine($"[{DateTime.Now}] SaveProductInDataBase concluído");
         //verifica se o CartHeader é nulo
         var cartHeader = await _context.CartHeaders.AsNoTracking().FirstOrDefaultAsync(c => c.UserId == cart.CartHeader.UserId);
 
@@ -108,16 +111,11 @@ public class CartRepository : ICartRepository
 
     private async Task UpdateQuantityAndItems(CartDTO cartDTO, Cart cart, CartHeader cartHeader)
     {
-
-        //Se CartHeader não é null
-        //verifica se CartItems possui o mesmo produto
         var cartItem = await _context.CartItems.AsNoTracking().FirstOrDefaultAsync(
-                               p => p.ProductId == cartDTO.CartItems.FirstOrDefault()
-                               .ProductId && p.CartHeaderId == cartHeader.Id);
-
+                               p => p.ProductId == cartDTO.CartItems.FirstOrDefault().ProductId
+                               && p.CartHeaderId == cartHeader.Id);
         if (cartItem is null)
         {
-            //Cria o CartItems
             cart.CartItems.FirstOrDefault().CartHeaderId = cartHeader.Id;
             cart.CartItems.FirstOrDefault().Product = null;
             _context.CartItems.Add(cart.CartItems.FirstOrDefault());
@@ -125,15 +123,14 @@ public class CartRepository : ICartRepository
         }
         else
         {
-            //Atualiza a quantidade e o CartItems
-            cart.CartItems.FirstOrDefault().Product = null;
-            cart.CartItems.FirstOrDefault().Quantity += cartItem.Quantity;
-            cart.CartItems.FirstOrDefault().Id = cartItem.Id;
-            cart.CartItems.FirstOrDefault().CartHeaderId = cartItem.CartHeaderId;
-            _context.CartItems.Update(cart.CartItems.FirstOrDefault());
-            await _context.SaveChangesAsync();
-        }
+            var newQuantity = cart.CartItems.FirstOrDefault().Quantity;
 
+            // ✅ busca COM tracking para o EF saber atualizar
+            var trackedItem = await _context.CartItems.FirstOrDefaultAsync(p => p.Id == cartItem.Id);
+            trackedItem.Quantity = cartItem.Quantity + newQuantity;
+
+            await _context.SaveChangesAsync(); // sem precisar de .Update()
+        }
     }
 
     private async Task CreateCartHeaderAndItems(Cart cart)
@@ -167,14 +164,44 @@ public class CartRepository : ICartRepository
     //fazer depois
 
 
-    public Task<bool> ApplyCouponAsync(string userId, string couponCode)
+    public async Task<bool> ApplyCouponAsync(string userId, string couponCode)
     {
-        throw new NotImplementedException();
+        var cartHeaderApplyCoupon = await _context.CartHeaders.FirstOrDefaultAsync(c => c.UserId == userId);
+
+        if (cartHeaderApplyCoupon is not null)
+        {
+
+            cartHeaderApplyCoupon.CouponCode = couponCode;
+
+            _context.CartHeaders.Update(cartHeaderApplyCoupon);
+
+            await _context.SaveChangesAsync();
+
+            return true;
+
+        }
+
+        return false;
     }
 
-    public Task<bool> DeleteCouponAsync(string userId)
+    public async Task<bool> DeleteCouponAsync(string userId)
     {
-        throw new NotImplementedException();
+        var cartHeaderDeleteCupon = await _context.CartHeaders.FirstOrDefaultAsync(c => c.UserId == userId);
+
+        if (cartHeaderDeleteCupon is not null)
+        {
+
+            cartHeaderDeleteCupon.CouponCode = "";
+
+            _context.CartHeaders.Update(cartHeaderDeleteCupon);
+
+            await _context.SaveChangesAsync();
+
+            return true;
+
+        }
+
+        return false;
     }
 
 
