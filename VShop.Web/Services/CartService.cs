@@ -1,0 +1,200 @@
+﻿using System.Text;
+using System.Text.Json;
+using VShop.CartApi.Models.ViewModels;
+using VShop.Web.Services.Interfaces;
+
+namespace VShop.Web.Services
+{
+    public class CartService : ICartService
+    {
+
+        private readonly IHttpClientFactory _clientFactory;
+        private readonly JsonSerializerOptions _options;
+        private const string apiEndpoint = "/api/Cart";
+        private CartViewModel _cartVM = new CartViewModel();
+
+        public CartService(IHttpClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        }
+
+        public async Task<CartViewModel> GetCartByUserIdAsync(string userId, string token)
+        {
+
+            var client = _clientFactory.CreateClient("CartApi");
+
+            PutTokenInHeaderAuthorization(token, client);
+
+            using (var response = await client.GetAsync($"{apiEndpoint}/getcart/{userId}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadAsStreamAsync();
+
+                    _cartVM = await JsonSerializer.DeserializeAsync<CartViewModel>(apiResponse, _options);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return _cartVM;
+        }
+
+        public async Task<CartViewModel> AddItemToCartAsync(CartViewModel cartVM, string token)
+        {
+            var client = _clientFactory.CreateClient("CartApi");
+
+            PutTokenInHeaderAuthorization(token, client);
+
+            var content = new StringContent(JsonSerializer.Serialize(cartVM), Encoding.UTF8, "application/json");
+
+            using (var response = await client.PostAsync($"{apiEndpoint}/addcart", content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadAsStreamAsync();
+
+                    _cartVM = await JsonSerializer.DeserializeAsync<CartViewModel>(apiResponse, _options);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return _cartVM;
+        }
+
+
+        public async Task<CartViewModel> UpdateCartAsync(CartViewModel cartVM, string token)
+        {
+            var client = _clientFactory.CreateClient("CartApi");
+
+            PutTokenInHeaderAuthorization(token, client);
+
+            CartViewModel cartUpdated = new CartViewModel();
+
+            var content = new StringContent(JsonSerializer.Serialize(cartVM), Encoding.UTF8, "application/json");
+
+            using (var response = await client.PutAsJsonAsync($"{apiEndpoint}/updatecart", content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadAsStreamAsync();
+
+                    cartUpdated = await JsonSerializer.DeserializeAsync<CartViewModel>(apiResponse, _options);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return cartUpdated;
+        }
+
+
+        public async Task<bool> RemoveItemCartAsync(int cartId, string token)
+        {
+
+            var client = _clientFactory.CreateClient("CartApi");
+
+            PutTokenInHeaderAuthorization(token, client);
+
+            using (var response = await client.DeleteAsync($"{apiEndpoint}/deleteCart/{cartId}"))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
+
+
+
+
+        public async Task<bool> ClearCartAsync(string userId, string token)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public async Task<bool> ApplyCouponAsync(CartViewModel cartVM, string token)
+        {
+
+            var client = _clientFactory.CreateClient("CartApi");
+            PutTokenInHeaderAuthorization(token, client);
+
+            StringContent content = new StringContent(JsonSerializer.Serialize(cartVM), Encoding.UTF8, "application/json");
+
+            using (var response = await client.PostAsync($"{apiEndpoint}/applycoupon/", content))
+            {
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> RemoveCouponAsync(string userId, string token)
+        {
+            var client = _clientFactory.CreateClient("CartApi");
+            PutTokenInHeaderAuthorization(token, client);
+
+            using (var response = await client.DeleteAsync($"{apiEndpoint}/deletecoupon/{userId}"))
+            {
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
+
+        public async Task<CartHeaderViewModel> CheckoutAsync(CartHeaderViewModel cartHeaderVM, string token)
+        {
+
+            var client = _clientFactory.CreateClient("CartApi");
+            PutTokenInHeaderAuthorization(token, client);
+
+            StringContent content = new StringContent(JsonSerializer.Serialize(cartHeaderVM),
+                                                 Encoding.UTF8, "application/json");
+
+            using (var response = await client.PostAsync($"{apiEndpoint}/checkout/", content))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    var apiResponse = await response.Content.ReadAsStreamAsync();
+                    cartHeaderVM = await JsonSerializer
+                                  .DeserializeAsync<CartHeaderViewModel>
+                                  (apiResponse, _options);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return cartHeaderVM;
+
+        }
+
+        private static void PutTokenInHeaderAuthorization(string token, HttpClient client)
+        {
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        }
+
+
+    }
+}
